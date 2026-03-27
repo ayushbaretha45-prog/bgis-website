@@ -2,7 +2,7 @@
 <html>
 <head>
     
-    <style>
+   <style>
 body {
   margin: 0;
   padding: 0;
@@ -10,43 +10,67 @@ body {
   color: white;
   text-align: center;
 
-  background: radial-gradient(circle at top, #2b0057, #0a001a 70%);
+  background: radial-gradient(circle at top, #3b0764, #0a001a 70%);
 }
 
-/* REMOVE GLOW */
+/* Heading clean */
 h1 {
-  color: #c084fc;
+  color: #22d3ee;
   text-shadow: none;
 }
 
-/* GLASS TABLE */
+/* TABLE GLASS EFFECT */
 table {
-  margin: auto;
+  margin: 30px auto;
   width: 90%;
   border-collapse: collapse;
 
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 
   border-radius: 15px;
   overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 0 30px rgba(140, 0, 255, 0.3);
 }
 
+/* HEADER FIX */
 th {
-  background: rgba(140, 0, 255, 0.6);
+  padding: 14px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #c084fc;
+  font-weight: bold;
 }
 
+/* CELLS */
 td {
   padding: 12px;
 }
 
+/* ROWS */
 tr:nth-child(even) {
   background: rgba(255,255,255,0.05);
 }
 
 tr:hover {
-  background: rgba(140, 0, 255, 0.2);
+  background: rgba(140, 0, 255, 0.25);
+  transition: 0.3s;
+}
+
+/* TOP 3 */
+tr:nth-child(1) {
+  background: linear-gradient(90deg, gold, orange);
+  color: black;
+}
+
+tr:nth-child(2) {
+  background: linear-gradient(90deg, silver, gray);
+  color: black;
+}
+
+tr:nth-child(3) {
+  background: linear-gradient(90deg, #cd7f32, #8b4513);
+  color: black;
 }
 </style>
 
