@@ -1,6 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+body {
+  background: #0f172a;
+  color: white;
+  font-family: Arial;
+  text-align: center;
+}
+
+h1 {
+  margin: 20px;
+}
+
+table {
+  margin: auto;
+  border-collapse: collapse;
+  width: 90%;
+  background: #1e293b;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 12px;
+}
+
+th {
+  background: #22c55e;
+}
+
+tr:nth-child(even) {
+  background: #334155;
+}
+
+tr:hover {
+  background: #475569;
+  transition: 0.3s;
+}
+
+/* TOP 3 highlight */
+tr:nth-child(1) { background: gold; color: black; }
+tr:nth-child(2) { background: silver; color: black; }
+tr:nth-child(3) { background: #cd7f32; color: black; }
+
+</style>
+
+<script>
+setTimeout(() => {
+  location.reload();
+}, 30000); // 30 sec refresh
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BGIS 2026 Live Standings</title>
     <link rel="stylesheet" href="/style.css">
 
