@@ -74,44 +74,22 @@ app.get("/admin", checkAuth, (req, res) => {
 
 // Update team kills/placement
 app.post("/update", checkAuth, (req, res) => {
-    const { team, kills, placement, matches } = req.body;
-
-    const selected = teams.find(t => t.name === team);
-
-    if (selected) {
-        selected.kills = parseInt(kills) || selected.kills;
-        selected.placement = parseInt(placement) || selected.placement;
-
-        // ✅ MATCHES ONLY UPDATE IF GIVEN
-        if (matches) {
-            selected.matches = parseInt(matches);
-        }
-
-        selected.points = selected.kills + selected.placement;
-    }
-
-    teams.sort((a,b)=> b.points - a.points);
-    io.emit("updateTable", teams);
-
-    res.redirect("/admin");
-});
-app.post("/update", checkAuth, (req, res) => {
     const { team, kills, placement, matches, addKills, addPlacement } = req.body;
 
     const selected = teams.find(t => t.name === team);
 
     if (selected) {
 
-        // NORMAL UPDATE
-        if (kills) selected.kills = parseInt(kills);
-        if (placement) selected.placement = parseInt(placement);
+        // SET VALUES
+        if (kills !== "") selected.kills = parseInt(kills);
+        if (placement !== "") selected.placement = parseInt(placement);
 
-        // ADD SYSTEM 🔥
+        // ADD SYSTEM (IMPORTANT FIX)
         if (addKills) selected.kills += parseInt(addKills);
         if (addPlacement) selected.placement += parseInt(addPlacement);
 
-        // MATCHES SAFE UPDATE
-        if (matches) selected.matches = parseInt(matches);
+        // MATCHES
+        if (matches !== "") selected.matches = parseInt(matches);
 
         selected.points = selected.kills + selected.placement;
     }
@@ -120,7 +98,7 @@ app.post("/update", checkAuth, (req, res) => {
     io.emit("updateTable", teams);
 
     res.redirect("/admin");
-});
+});;
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, "0.0.0.0", () => {
