@@ -79,9 +79,39 @@ app.post("/update", checkAuth, (req, res) => {
     const selected = teams.find(t => t.name === team);
 
     if (selected) {
-        selected.kills = parseInt(kills) || 0;
-        selected.placement = parseInt(placement) || 0;
-        selected.matches = parseInt(matches) || 0; // ✅ SAFE
+        selected.kills = parseInt(kills) || selected.kills;
+        selected.placement = parseInt(placement) || selected.placement;
+
+        // ✅ MATCHES ONLY UPDATE IF GIVEN
+        if (matches) {
+            selected.matches = parseInt(matches);
+        }
+
+        selected.points = selected.kills + selected.placement;
+    }
+
+    teams.sort((a,b)=> b.points - a.points);
+    io.emit("updateTable", teams);
+
+    res.redirect("/admin");
+});
+app.post("/update", checkAuth, (req, res) => {
+    const { team, kills, placement, matches, addKills, addPlacement } = req.body;
+
+    const selected = teams.find(t => t.name === team);
+
+    if (selected) {
+
+        // NORMAL UPDATE
+        if (kills) selected.kills = parseInt(kills);
+        if (placement) selected.placement = parseInt(placement);
+
+        // ADD SYSTEM 🔥
+        if (addKills) selected.kills += parseInt(addKills);
+        if (addPlacement) selected.placement += parseInt(addPlacement);
+
+        // MATCHES SAFE UPDATE
+        if (matches) selected.matches = parseInt(matches);
 
         selected.points = selected.kills + selected.placement;
     }

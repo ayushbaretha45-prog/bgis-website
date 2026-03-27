@@ -10,7 +10,20 @@ body {
   color: white;
   text-align: center;
 
-  background: radial-gradient(circle at top, #3b0764, #0a001a 70%);
+  background: url('/bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* DARK OVERLAY (important) */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: -1;
 }
 
 /* Heading clean */
