@@ -7,32 +7,32 @@ body {
   color: white;
   text-align: center;
 
-  /* BGIS Purple Gradient */
-  background: linear-gradient(135deg, #0a001a, #1a0033, #2b0057, #4c00ff);
-  min-height: 100vh;
+  background: radial-gradient(circle at top, #2b0057, #0a001a 70%);
 }
 
 /* Glow Heading */
 h1 {
   color: #c084fc;
-  text-shadow: 0 0 10px #9333ea, 0 0 20px #7e22ce;
+  text-shadow: none; /* glow removed */
 }
 
-/* Table Styling */
 table {
   margin: auto;
   width: 90%;
   border-collapse: collapse;
-  background: rgba(20, 0, 40, 0.8);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border-radius: 15px;
   overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Table Header */
+
 th {
-  background: linear-gradient(90deg, #7e22ce, #9333ea);
-  color: white;
+  background: rgba(140, 0, 255, 0.6);
 }
 
 /* Table Rows */
@@ -41,12 +41,11 @@ td {
 }
 
 tr:nth-child(even) {
-  background: rgba(100, 0, 200, 0.2);
+  background: rgba(255,255,255,0.05);
 }
 
 tr:hover {
-  background: rgba(140, 0, 255, 0.4);
-  transition: 0.3s;
+  background: rgba(140, 0, 255, 0.2);
 }
 
 /* Top 3 Glow Effect */

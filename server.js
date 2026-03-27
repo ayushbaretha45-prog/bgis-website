@@ -77,6 +77,7 @@ app.post("/update", checkAuth, (req, res) => {
     const { team, kills, placement } = req.body;
     const selected = teams.find(t => t.name === team);
     if (selected) {
+        selected.matches = parseInt(matches);
         selected.kills = parseInt(kills);
         selected.placement = parseInt(placement);
         selected.points = selected.kills + selected.placement;
