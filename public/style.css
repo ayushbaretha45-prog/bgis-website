@@ -1,0 +1,88 @@
+body{
+    background:#0b0b0f;
+    color:white;
+    font-family:Arial;
+    text-align:center;
+}
+
+.logo {
+    width: 80px;
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid #00f7ff;
+        animation: neonGlow 2s infinite alternate;
+}
+
+h1, h2{
+    color:#00f7ff;
+    margin-top:30px;
+}
+
+table{
+    width:70%;
+    margin:auto;
+    border-collapse:collapse;
+    margin-top:40px;
+}
+
+th{
+    background:#111;
+    padding:12px;
+    border-bottom:2px solid #00f7ff;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #333;
+}
+
+tr:hover{
+    background:#15151f;
+}
+
+select,input{
+    padding:10px;
+    margin:10px;
+    background:#111;
+    border:none;
+    color:white;
+}
+
+button{
+    padding:10px 20px;
+    background:#00f7ff;
+    border:none;
+    cursor:pointer;
+}
+
+.probability{
+    width:70%;
+    margin:30px auto;
+}
+
+.prob{
+    margin:5px 0;
+}
+
+.bar{
+    background:#1a1a1a;
+    height:15px;
+    border-radius:20px;
+    margin-top:5px;
+}
+
+.fill{
+    background:#00f7ff;
+    height:15px;
+    border-radius:20px;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width:768px){
+    table, .probability{
+        width: 95%;
+    }
+    .bar{
+        width:60%;
+    }
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Panel</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header>
+    <img src="/logo.png" alt="BGIS Logo" class="logo">
+    <h1>Admin Panel</h1>
+</header>
+
+<div class="admin-container">
+<p class="welcome">Welcome, <%= user %> | <a href="/logout" class="logout">Logout</a></p>
+
+<form action="/update" method="POST" class="admin-form">
+    <select name="team">
+        <% teams.forEach(team=>{ %>
+        <option value="<%= team.name %>"><%= team.name %></option>
+        <% }) %>
+    </select>
+
+    <input type="number" name="kills" placeholder="Kills" required>
+    <input type="number" name="placement" placeholder="Placement" required>
+    <button type="submit">Update</button>
+</form>
+</div>
+
+</body>
+</html>

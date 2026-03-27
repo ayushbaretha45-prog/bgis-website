@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BGIS 2026 Live Standings</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header>
+    <img src="/logo.png" alt="BGIS Logo" class="logo">
+    <h1>BGIS 2026  LIVE STANDINGS</h1>
+</header>
+
+<section class="dashboard">
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Team</th>
+            <th>Finishes Points</th>
+            <th>Placement Points</th>
+            <th>Points</th>
+        </tr>
+        </thead>
+        <tbody id="tableBody">
+        <% teams.forEach((team,index)=>{ %>
+        <tr>
+            <td><%= index+1 %></td>
+            <td><%= team.name %></td>
+            <td><%= team.kills %></td>
+            <td><%= team.placement %></td>
+            <td><%= team.points %></td>
+        </tr>
+        <% }) %>
+        </tbody>
+    </table>
+
+    <div class="probability">
+        <h2>Live Winning Probability</h2>
+        <div id="barsContainer">
+        <% teams.forEach(team => { %>
+            <div class="prob">
+                <span><%= team.name %></span>
+                <div class="bar">
+                    <div class="fill" style="width:<%= team.points*2 %>%"></div>
+                </div>
+            </div>
+        <% }) %>
+        </div>
+    </div>
+</section>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+const socket = io();
+
+// Render table dynamically
+function renderTable(teams){
+    const table = document.getElementById("tableBody");
+    table.innerHTML = "";
+    teams.forEach((team,index)=>{
+        table.innerHTML += `
+        <tr>
+            <td>${index+1}</td>
+            <td>${team.name}</td>
+            <td>${team.kills}</td>
+            <td>${team.placement}</td>
+            <td>${team.points}</td>
+        </tr>`;
+    });
+}
+
+// Render probability bars dynamically
+function renderBars(teams){
+    const bars = document.getElementById("barsContainer");
+    bars.innerHTML = "";
+    teams.forEach(team=>{
+        bars.innerHTML += `
+        <div class="prob">
+            <span>${team.name}</span>
+            <div class="bar">
+                <div class="fill" style="width:${team.points*2}%"></div>
+            </div>
+        </div>`;
+    });
+}
+
+// Initial render
+renderTable(<%= JSON.stringify(teams) %>);
+renderBars(<%= JSON.stringify(teams) %>);
+
+// Live updates from server
+socket.on("updateTable", teams=>{
+    teams.sort((a,b)=> b.points - a.points);
+    renderTable(teams);
+    renderBars(teams);
+});
+</script>
+
+</body>
+</html>
