@@ -1,49 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
+    
     <style>
 body {
-  background: #0f172a;
-  color: white;
+  margin: 0;
+  padding: 0;
   font-family: Arial;
+  color: white;
   text-align: center;
+
+  background: radial-gradient(circle at top, #2b0057, #0a001a 70%);
 }
 
+/* REMOVE GLOW */
 h1 {
-  margin: 20px;
+  color: #c084fc;
+  text-shadow: none;
 }
 
+/* GLASS TABLE */
 table {
   margin: auto;
-  border-collapse: collapse;
   width: 90%;
-  background: #1e293b;
-  border-radius: 10px;
-  overflow: hidden;
-}
+  border-collapse: collapse;
 
-th, td {
-  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+
+  border-radius: 15px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
 th {
-  background: #22c55e;
+  background: rgba(140, 0, 255, 0.6);
+}
+
+td {
+  padding: 12px;
 }
 
 tr:nth-child(even) {
-  background: #334155;
+  background: rgba(255,255,255,0.05);
 }
 
 tr:hover {
-  background: #475569;
-  transition: 0.3s;
+  background: rgba(140, 0, 255, 0.2);
 }
-
-/* TOP 3 highlight */
-tr:nth-child(1) { background: gold; color: black; }
-tr:nth-child(2) { background: silver; color: black; }
-tr:nth-child(3) { background: #cd7f32; color: black; }
-
 </style>
 
 <script>
@@ -76,6 +80,7 @@ gtag('config', 'G-PHYVSFKSHL');
         <tr>
             <th>#</th>
             <th>Team</th>
+            <th>Matches</th>
             <th>Finishes Points</th>
             <th>Placement Points</th>
             <th>Points</th>
@@ -86,6 +91,7 @@ gtag('config', 'G-PHYVSFKSHL');
         <tr>
             <td><%= index+1 %></td>
             <td><%= team.name %></td>
+            <td><%= team.matches %></td>
             <td><%= team.kills %></td>
             <td><%= team.placement %></td>
             <td><%= team.points %></td>
