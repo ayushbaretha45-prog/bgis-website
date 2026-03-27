@@ -74,16 +74,21 @@ app.get("/admin", checkAuth, (req, res) => {
 
 // Update team kills/placement
 app.post("/update", checkAuth, (req, res) => {
-    const { team, kills, placement } = req.body;
+    const { team, kills, placement, matches } = req.body;
+
     const selected = teams.find(t => t.name === team);
+
     if (selected) {
-        selected.matches = parseInt(matches);
-        selected.kills = parseInt(kills);
-        selected.placement = parseInt(placement);
+        selected.kills = parseInt(kills) || 0;
+        selected.placement = parseInt(placement) || 0;
+        selected.matches = parseInt(matches) || 0; // ✅ SAFE
+
         selected.points = selected.kills + selected.placement;
     }
+
     teams.sort((a,b)=> b.points - a.points);
     io.emit("updateTable", teams);
+
     res.redirect("/admin");
 });
 
