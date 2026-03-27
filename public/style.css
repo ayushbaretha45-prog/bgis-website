@@ -1,3 +1,4 @@
+<head>
 <style>
 body {
   margin: 0;
@@ -6,44 +7,81 @@ body {
   color: white;
   text-align: center;
 
-  background: linear-gradient(135deg, #0f172a, #020617, #0a0f2c);
+  /* BGIS Purple Gradient */
+  background: linear-gradient(135deg, #0a001a, #1a0033, #2b0057, #4c00ff);
   min-height: 100vh;
 }
-</style>
-<style>
-body {
-  margin: 0;
-  padding: 0;
+
+/* Glow Heading */
+h1 {
+  color: #c084fc;
+  text-shadow: 0 0 10px #9333ea, 0 0 20px #7e22ce;
+}
+
+/* Table Styling */
+table {
+  margin: auto;
+  width: 90%;
+  border-collapse: collapse;
+  background: rgba(20, 0, 40, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Table Header */
+th {
+  background: linear-gradient(90deg, #7e22ce, #9333ea);
   color: white;
-  text-align: center;
-
-  background: url('/bg.jpg') no-repeat center center fixed;
-  background-size: cover;
 }
-</style>
 
-<style>
-body {
-  margin: 0;
-  padding: 0;
+/* Table Rows */
+td {
+  padding: 12px;
+}
+
+tr:nth-child(even) {
+  background: rgba(100, 0, 200, 0.2);
+}
+
+tr:hover {
+  background: rgba(140, 0, 255, 0.4);
+  transition: 0.3s;
+}
+
+/* Top 3 Glow Effect */
+tr:nth-child(1) {
+  background: linear-gradient(90deg, gold, orange);
+  color: black;
+}
+
+tr:nth-child(2) {
+  background: linear-gradient(90deg, silver, gray);
+  color: black;
+}
+
+tr:nth-child(3) {
+  background: linear-gradient(90deg, #cd7f32, #8b4513);
+  color: black;
+}
+
+/* Search Box */
+input {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  margin: 10px;
+  background: #1a0033;
   color: white;
-  text-align: center;
-
-  background: url('/bg.jpg') no-repeat center center fixed;
-  background-size: cover;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.7);
+/* Neon Glow Effect */
+input:focus {
+  box-shadow: 0 0 10px #9333ea;
 }
 </style>
-
+</head>
 
 
 body{
