@@ -8,7 +8,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-const teams = require("./teams");
+const fs = require("fs");
+let teams = JSON.parse(fs.readFileSync("data.json"));
 
 // Hardcoded admin users
 const users = [
@@ -79,26 +80,25 @@ app.post("/update", checkAuth, (req, res) => {
     const selected = teams.find(t => t.name === team);
 
     if (selected) {
-
-        // SET VALUES
         if (kills !== "") selected.kills = parseInt(kills);
         if (placement !== "") selected.placement = parseInt(placement);
 
-        // ADD SYSTEM (IMPORTANT FIX)
         if (addKills) selected.kills += parseInt(addKills);
         if (addPlacement) selected.placement += parseInt(addPlacement);
 
-        // MATCHES
         if (matches !== "") selected.matches = parseInt(matches);
 
         selected.points = selected.kills + selected.placement;
     }
 
     teams.sort((a,b)=> b.points - a.points);
-    io.emit("updateTable", teams);
 
+    // ✅ SAVE PERMANENT
+    fs.writeFileSync("data.json", JSON.stringify(teams, null, 2));
+
+    io.emit("updateTable", teams);
     res.redirect("/admin");
-});;
+});
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, "0.0.0.0", () => {
