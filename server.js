@@ -1,3 +1,43 @@
+const mongoose = require("mongoose");
+mongoose.connect("mongodb+srv://Ayush:Ayush123@ayush.zhhndi4.mongodb.net/?appName=Ayush")
+.then(() => console.log("MongoDB Connected"))
+.catch(err => console.log(err));
+
+const teamSchema = new mongoose.Schema({
+  name: String,
+  matches: { type: Number, default: 0 },
+  kills: { type: Number, default: 0 },
+  placement: { type: Number, default: 0 },
+  points: { type: Number, default: 0 }
+});
+
+const Team = mongoose.model("Team", teamSchema);
+async function seedTeams() {
+  const count = await Team.countDocuments();
+  if (count === 0) {
+    await Team.insertMany([
+      { name:"iQOO SOUL" },
+      { name:"iQOO ORANGUTAN" },
+      { name:"GENESIS ESPORTS" },
+      { name:"Learn From Past" },
+      { name:"iQOO RECKONING ESPORTS" },
+      { name:"iQOO Revenant Xspark" },
+      { name:"Victores Sumus" },
+      { name:"Meta Ninza" },
+      { name:"Hero Xtreme Godlike" },
+      { name:"WELT E-Sports" },
+      { name:"Nebula Esports" },
+      { name:"MYTH OFFICIAL" },
+      { name:"Wyld Fangs" },
+      { name:"K9 Esports" },
+      { name:"iQOO Team Tamilas" },
+      { name:"Vasista Esports" }
+    ]);
+    console.log("Teams inserted");
+  }
+}
+
+seedTeams();
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -8,8 +48,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-const fs = require("fs");
-let teams = JSON.parse(fs.readFileSync("data.json"));
+
 
 // Hardcoded admin users
 const users = [
@@ -62,42 +101,40 @@ app.get("/logout", (req,res)=>{
 });
 
 // Main dashboard
-app.get("/", (req, res) => {
-    teams.forEach(team => team.points = team.kills + team.placement);
-    teams.sort((a,b)=> b.points - a.points);
-    res.render("index", { teams });
+app.get("/", async (req, res) => {
+  let teams = await Team.find();
+  teams.forEach(team => team.points = team.kills + team.placement);
+  teams.sort((a,b)=> b.points - a.points);
+  res.render("index", { teams });
 });
 
 // Admin page (protected)
-app.get("/admin", checkAuth, (req, res) => {
-    res.render("admin", { teams, user: req.session.user });
+app.get("/admin", checkAuth, async (req, res) => {
+  let teams = await Team.find();
+  res.render("admin", { teams, user: req.session.user });
 });
 
 // Update team kills/placement
-app.post("/update", checkAuth, (req, res) => {
-    const { team, kills, placement, matches, addKills, addPlacement } = req.body;
+app.post("/update", checkAuth, async (req, res) => {
+  const { team, matches, addKills, addPlacement } = req.body;
 
-    const selected = teams.find(t => t.name === team);
+  const selected = await Team.findOne({ name: team });
 
-    if (selected) {
-        if (kills !== "") selected.kills = parseInt(kills);
-        if (placement !== "") selected.placement = parseInt(placement);
+  if (selected) {
+    if (addKills) selected.kills += parseInt(addKills);
+    if (addPlacement) selected.placement += parseInt(addPlacement);
+    if (matches !== "") selected.matches = parseInt(matches);
 
-        if (addKills) selected.kills += parseInt(addKills);
-        if (addPlacement) selected.placement += parseInt(addPlacement);
+    selected.points = selected.kills + selected.placement;
 
-        if (matches !== "") selected.matches = parseInt(matches);
+    await selected.save();
+  }
 
-        selected.points = selected.kills + selected.placement;
-    }
+  let teams = await Team.find();
+  teams.sort((a,b)=> b.points - a.points);
 
-    teams.sort((a,b)=> b.points - a.points);
-
-    // ✅ SAVE PERMANENT
-    fs.writeFileSync("data.json", JSON.stringify(teams, null, 2));
-
-    io.emit("updateTable", teams);
-    res.redirect("/admin");
+  io.emit("updateTable", teams);
+  res.redirect("/admin");
 });
 
 const PORT = process.env.PORT || 3000;
