@@ -12,7 +12,7 @@ const teamSchema = new mongoose.Schema({
 });
 
 const Team = mongoose.model("Team", teamSchema);
-async function seedTeams() {
+async function  {
   const count = await Team.countDocuments();
   if (count === 0) {
     await Team.insertMany([
