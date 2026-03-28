@@ -1,7 +1,4 @@
 const mongoose = require("mongoose");
-mongoose.connect("mongodb+srv://Ayush:Ayush123@ayush.zhhndi4.mongodb.net/bgis")
-.then(() => console.log("MongoDB Connected"))
-.catch(err => console.log(err));
 
 const teamSchema = new mongoose.Schema({
   name: String,
@@ -11,9 +8,15 @@ const teamSchema = new mongoose.Schema({
   points: { type: Number, default: 0 }
 });
 
-const Team = mongoose.model("Team", teamSchema);
-async function seedTeams() {
+const Team = mongoose.models.Team || mongoose.model("Team", teamSchema);
+
+// ✅ CONNECT + SEED TOGETHER
+mongoose.connect("mongodb+srv://Ayush:Ayush123@ayush.zhhndi4.mongodb.net/bgis")
+.then(async () => {
+  console.log("MongoDB Connected");
+
   const count = await Team.countDocuments();
+
   if (count === 0) {
     await Team.insertMany([
       { name:"iQOO SOUL" },
@@ -35,9 +38,10 @@ async function seedTeams() {
     ]);
     console.log("Teams inserted");
   }
-}
-
-seedTeams();
+})
+.catch(err => {
+  console.log("Mongo Error:", err);
+});
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
