@@ -93,20 +93,7 @@ gtag('config', 'G-PHYVSFKSHL');
   <!-- table yaha daal -->
 </div>
 
-<div onclick="showTable()" style="
-  width:90%;
-  margin:40px auto;
-  padding:50px;
-  background:linear-gradient(135deg,#6a00ff,#9d4edd);
-  border-radius:20px;
-  cursor:pointer;
-  text-align:center;
-  color:white;
-">
-  <h1>BGIS 2026 Live Point Table</h1>
-  <p>Click to View Standings</p>
-</div>
-<div id="tableSection" style="display:none;">
+
 <table>
         <thead>
         <tr>
@@ -130,7 +117,7 @@ gtag('config', 'G-PHYVSFKSHL');
         </tr>
         <% }) %>
         </tbody>
-    </table> </div>
+    </table> 
 
     <div class="probability">
         <h2>Live Winning Probability</h2>
@@ -195,10 +182,6 @@ socket.on("updateTable", teams=>{
 </script>
 
 </body>
-<script>
-function showTable() {
-  document.getElementById("tableSection").style.display = "block";
-}
-</script>
+
 
 </html>
