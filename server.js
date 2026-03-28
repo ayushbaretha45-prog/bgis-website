@@ -116,15 +116,24 @@ app.get("/admin", checkAuth, async (req, res) => {
 
 // Update team kills/placement
 app.post("/update", checkAuth, async (req, res) => {
-  const { team, matches, addKills, addPlacement } = req.body;
+  const { team, matches, addKills, addPlacement, kills, placement } = req.body;
 
   const selected = await Team.findOne({ name: team });
 
   if (selected) {
+
+    // ✅ DIRECT SET (even 0 works)
+    if (kills !== "") selected.kills = parseInt(kills);
+    if (placement !== "") selected.placement = parseInt(placement);
+
+    // ✅ ADD SYSTEM
     if (addKills) selected.kills += parseInt(addKills);
     if (addPlacement) selected.placement += parseInt(addPlacement);
+
+    // ✅ MATCHES
     if (matches !== "") selected.matches = parseInt(matches);
 
+    // ✅ POINTS CALC
     selected.points = selected.kills + selected.placement;
 
     await selected.save();
@@ -136,7 +145,6 @@ app.post("/update", checkAuth, async (req, res) => {
   io.emit("updateTable", teams);
   res.redirect("/admin");
 });
-
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
